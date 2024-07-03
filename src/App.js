@@ -1,25 +1,85 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from './Components/Header';
+import Footer from './Components/Footer';
+import Home from './Components/Home';
 
-function App() {
+import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Gallery from './Components/Gallery';
+import Contact from './Components/Contact';
+import Body from './Components/Body';
+import Signin from './Components/Signin';
+import StudentDetail from './Components/EmployeeCard';
+import EmployeeDetail from './Components/EmployeeDetail';
+import AddEmployee from './Components/AddEmployee';
+import EmpNotFound from './Components/EmpNotFound';
+import Signup from './Components/Signup';
+
+
+
+
+export const Layout = ({ children }) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Outlet/>
+      <Footer />
+    </>
   );
+};
+
+
+
+
+const appRoute = createBrowserRouter([
+  {
+    element:<Layout/>,
+    children:[
+      {
+        path:'/',
+        element:<Home/>,
+      },
+      {
+        path:'/gallery',
+        element:<Gallery/>
+      },
+      {
+        path:'/contact',
+        element:<Contact/>
+      },
+      {
+        path:'/signin',
+        element:<Signin/>
+      },
+      {
+        path:'/sign-up',
+        element:<Signup/>
+      },
+      {
+        path: '/employee/:id',
+        element: <EmployeeDetail />
+      },
+      {
+        path:'/add-employee',
+        element:<AddEmployee/>
+      }
+    ]
+    // errorElement:<EmpNotFound/>
+  }
+  // {
+  //   path:'/employee/:id',
+  //   element:<EmployeeDetail/>
+  // }
+])
+
+
+function App (){
+  return(
+    <>
+    <RouterProvider router={appRoute}/>
+    </>
+
+  )
 }
+
 
 export default App;
